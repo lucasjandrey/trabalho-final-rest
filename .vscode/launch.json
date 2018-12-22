@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - trabalhofinalApplication",
+            "request": "launch",
+            "mainClass": "br.edu.unidavi.trabalhofinal.trabalhofinalApplication",
+            "projectName": "trabalho-final"
+        }
+    ]
+}
