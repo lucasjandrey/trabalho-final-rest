@@ -16,7 +16,7 @@ public class ItemResourceAssembler extends ResourceAssemblerSupport<Item, ItemRe
 	
 	@Override
 	public ItemResource toResource(Item item) {
-		return new ItemResource(item, linkTo(methodOn(ItemRestController.class).get(item.getId())).withSelfRel());
+		return new ItemResource(item, linkTo(methodOn(ItemRestController.class).get(item.getPedido_id())).withSelfRel());
 	}
 	
 	@Override

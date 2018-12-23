@@ -102,11 +102,4 @@ public class ProdutoRestController {
 	public ResponseEntity<List<ProdutoResource>> findByMarca(@PathVariable String marca) {
 		return new ResponseEntity<>(assembler.toResources(repository.findByMarca(marca)), HttpStatus.OK);
 	}
-
-	@Secured("ROLE_USER")
-    @ApiOperation("Retorna os dados de um produto de acordo com a data de criação")
-    @GetMapping("/datacriacao/{data}")
-	public ResponseEntity<List<ProdutoResource>> findByDataCriacao(@PathVariable String data) {
-		return new ResponseEntity<>(assembler.toResources(repository.findByDataCriacao(data)), HttpStatus.OK);
-    }
 }

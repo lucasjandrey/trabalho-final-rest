@@ -22,9 +22,10 @@ import br.edu.unidavi.trabalhofinal.Item;
 import br.edu.unidavi.trabalhofinal.ItemRepository;
 import br.edu.unidavi.trabalhofinal.ItemResource;
 import br.edu.unidavi.trabalhofinal.ItemResourceAssembler;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/items")
+@RequestMapping("/itens")
 public class ItemRestController {
 
 	@Autowired
@@ -38,54 +39,46 @@ public class ItemRestController {
 	}
 	
 	@Secured("ROLE_USER")
-	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<List<ItemResource>> getAll() {
-		return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
-	}
-	
-	@Secured("ROLE_USER")
-	@GetMapping("/{id}")
-	public ResponseEntity<ItemResource> get(@PathVariable Long id) {
-		Item item = repository.findOne(id);
-		if (item != null) {			
-			return new ResponseEntity<>(assembler.toResource(item), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@Secured("ROLE_MANAGER")
-	@PostMapping
-	public ResponseEntity<ItemResource> create(@RequestBody Item item) {
-		item = repository.save(item);
-		if (item != null) {
-			return new ResponseEntity<>(assembler.toResource(item), HttpStatus.OK);					
-		} else {
-			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-	}
-	
-	@Secured("ROLE_MANAGER")
-	@PutMapping("/{id}")
-	public ResponseEntity<ItemResource> update(@PathVariable Long id, @RequestBody Item item) {
-		if (item != null) {
-			item.setId(id);
-			item = repository.save(item);
-			return new ResponseEntity<>(assembler.toResource(item), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-	}
-	
-	@Secured("ROLE_MANAGER")
-	@DeleteMapping("/{id}")
-	public ResponseEntity<ItemResource> delete(@PathVariable Long id) {
-		Item item = repository.findOne(id);
-		if (item != null) {
-			repository.delete(item);
-			return new ResponseEntity<>(assembler.toResource(item), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-	}
+    @ApiOperation("Pega os itens pelo número do pedido")
+    @GetMapping("/{pedido_id}")
+    public ResponseEntity<ItemResource> get(@PathVariable Long pedido_id) {
+        Item item = repository.findOne(pedido_id);
+        if (item != null) {
+            return new ResponseEntity<>(assembler.toResource(item), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Secured("ROLE_USER")
+    @ApiOperation("Retorna todos os itens")
+    @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    public ResponseEntity<List<ItemResource>> getAll() {
+        return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
+    }
+
+    @Secured("ROLE_MANAGER")
+    @ApiOperation("Insere um item")
+    @PostMapping
+    public ResponseEntity<ItemResource> create(@RequestBody Item item) {
+        item = repository.save(item);
+        if (item != null) {
+            return new ResponseEntity<>(assembler.toResource(item), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    @Secured("ROLE_MANAGER")
+    @ApiOperation("Remove os itens pelo id do pedido")
+    @DeleteMapping("/{pedido_id}")
+    public ResponseEntity<ItemResource> delete(@PathVariable Long pedido_id) {
+        Item item = repository.findOne(pedido_id);
+        if (item != null) {
+            repository.delete(item);
+            return new ResponseEntity<>(assembler.toResource(item), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
 }
