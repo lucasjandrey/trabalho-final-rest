@@ -5,6 +5,13 @@
             "name": "CodeLens (Launch) - trabalhofinalApplication",
             "request": "launch",
             "mainClass": "br.edu.unidavi.trabalhofinal.trabalhofinalApplication",
+            "projectName": "infra-web-trabalho-final"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - trabalhofinalApplication",
+            "request": "launch",
+            "mainClass": "br.edu.unidavi.trabalhofinal.trabalhofinalApplication",
             "projectName": "trabalho-final"
         }
     ]

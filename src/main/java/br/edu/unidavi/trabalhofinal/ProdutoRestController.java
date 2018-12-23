@@ -23,6 +23,7 @@ import br.edu.unidavi.trabalhofinal.Produto;
 import br.edu.unidavi.trabalhofinal.ProdutoRepository;
 import br.edu.unidavi.trabalhofinal.ProdutoResource;
 import br.edu.unidavi.trabalhofinal.ProdutoResourceAssembler;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/produtos")
@@ -101,4 +102,11 @@ public class ProdutoRestController {
 	public ResponseEntity<List<ProdutoResource>> findByMarca(@PathVariable String marca) {
 		return new ResponseEntity<>(assembler.toResources(repository.findByMarca(marca)), HttpStatus.OK);
 	}
+
+	@Secured("ROLE_USER")
+    @ApiOperation("Retorna os dados de um produto de acordo com a data de criação")
+    @GetMapping("/datacriacao/{data}")
+	public ResponseEntity<List<ProdutoResource>> findByDataCriacao(@PathVariable String data) {
+		return new ResponseEntity<>(assembler.toResources(repository.findByDataCriacao(data)), HttpStatus.OK);
+    }
 }
